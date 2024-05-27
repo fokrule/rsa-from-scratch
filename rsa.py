@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import gmpy2
 from gmpy2 import mpz
 import os
