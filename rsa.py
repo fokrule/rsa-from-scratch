@@ -3,6 +3,7 @@
 import random
 from sympy import nextprime
 import tkinter as tk
+from tkinter import ttk
 from tkinter import simpledialog, messagebox, filedialog
 import hashlib
 
@@ -92,7 +93,8 @@ def oaep_unpad(data, hash_algo=hashlib.sha256):
 """
 def main_gui():
     root = tk.Tk()
-    root.title("RSA Encryption Tool")
+    root.title("RSA Encryption & Decryption Tool")
+    
 
     tk.Label(root, text="Enter Text to Encrypt:").pack()
     text_entry = tk.Entry(root, width=50)
@@ -107,12 +109,25 @@ def main_gui():
     e = find_coprime(phi_n)
     d = modinv(e, phi_n)
 
+    
+
     def encrypt_message():
         plaintext = text_entry.get()
         if plaintext:
             ciphertext = encrypt(plaintext, e, n)
             formatted_cipher = ','.join(map(str, ciphertext))
-            messagebox.showinfo("Encrypted", f"Encrypted Text: {formatted_cipher}")
+            
+            
+            # Decrypt the ciphertext
+            decrypted_text = decrypt(ciphertext, d, n)
+        
+            # Create a message string that includes both encrypted and decrypted text
+            message = f"Encrypted Text: {formatted_cipher}\nDecrypted Text: {decrypted_text}"
+        
+            # Display both encrypted and decrypted messages in one popup
+            messagebox.showinfo("Encryption and Decryption", message)
+        
+            # Clear the input field
             text_entry.delete(0, tk.END)
         else:
             messagebox.showerror("Error", "Please enter some text to encrypt")
@@ -131,8 +146,8 @@ def main_gui():
                 file.write(ciphertext_str)
 
     tk.Button(root, text="Encrypt", command=encrypt_message).pack()
-    tk.Button(root, text="Decrypt", command=decrypt_message).pack()
-    tk.Button(root, text="Save Ciphertext", command=save_cipher).pack()
+    #tk.Button(root, text="Decrypt", command=decrypt_message).pack()
+    #tk.Button(root, text="Save Ciphertext", command=save_cipher).pack()
 
     root.mainloop()
 
