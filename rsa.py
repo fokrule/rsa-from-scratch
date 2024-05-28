@@ -39,7 +39,7 @@ def modinv(a, m):
         x1 += m0
     return x1
 def encrypt(plaintext, e, n):
-    padded_message = oaep_pad(plaintext.encode(), 1024)  # keysize needs to match your settings
+    padded_message = oaep_pad(plaintext.encode(), 1024)  # keysize needs to match settings
     ciphertext = [pow(int.from_bytes(padded_message[i:i+1], byteorder='big'), e, n) for i in range(0, len(padded_message), 1)]
     return ciphertext
 
